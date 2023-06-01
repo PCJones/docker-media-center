@@ -40,7 +40,7 @@ services:
     environment:
       - PUID=${ENV_PUID}
       - PGID=${ENV_PGID}
-      - TZ={TIMEZONE}
+      - TZ=${TIMEZONE}
     volumes:
       - ${SERVICES_DIR}/transmission:/config
       - ${DATA_DIR}/downloads:/data/downloads
@@ -67,7 +67,7 @@ services:
     environment:
       - PUID=${ENV_PUID}
       - PGID=${ENV_PGID}
-      - TZ={TIMEZONE}
+      - TZ=${TIMEZONE}
     volumes:
       - ${SERVICES_DIR}/radarr:/config
       - ${DATA_DIR}:/data
@@ -93,7 +93,7 @@ services:
     environment:
       - PUID=${ENV_PUID}
       - PGID=${ENV_PGID}
-      - TZ={TIMEZONE}
+      - TZ=${TIMEZONE}
     volumes:
       - ${SERVICES_DIR}/sonarr:/config
       - ${DATA_DIR}:/data
@@ -117,7 +117,7 @@ services:
     environment:
       - PUID=${ENV_PUID}
       - PGID=${ENV_PGID}
-      - TZ={TIMEZONE}
+      - TZ=${TIMEZONE}
     volumes:
       - ${SERVICES_DIR}/prowlarr:/config
     labels:
@@ -139,7 +139,7 @@ services:
       - local
     environment:
       - LOG_LEVEL=debug
-      - TZ={TIMEZONE}
+      - TZ=${TIMEZONE}
     volumes:
       - ${SERVICES_DIR}/jellyseerr:/app/config
     labels:
@@ -149,6 +149,34 @@ services:
       - "traefik.http.services.dmc-jellyseerr.loadbalancer.server.port=5055"
       - "traefik.http.routers.dmc-jellyseerr.tls.certresolver=letsencrypt"
       - "traefik.docker.network=global"
+
+  rdtclient:
+    image: rogerfar/rdtclient
+    restart: unless-stopped
+    networks:
+      - global
+      - local
+    environment:
+      - PUID=${ENV_PUID}
+      - PGID=${ENV_PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${DATA_DIR}/downloads:/data/downloads
+      - ${SERVICES_DIR}/rdtclient:/data/db
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dmc-rdtclient.rule=Host(`${SUB_DOMAIN_RDTCLIENT}.${DOMAIN}`)"
+      - "traefik.http.routers.dmc-rdtclient.tls=true"
+      - "traefik.http.services.dmc-rdtclient.loadbalancer.server.port=6500"
+      - "traefik.http.routers.dmc-rdtclient.tls.certresolver=letsencrypt"
+      - "traefik.docker.network=global"
+      # Basic auth
+      - "traefik.http.middlewares.dmc-auth.basicauth.usersfile=/.htpasswd"
+      - "traefik.http.routers.dmc-rdtclient.middlewares=dmc-auth"
 
   wizarr:
     image: ghcr.io/wizarrrr/wizarr
