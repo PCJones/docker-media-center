@@ -31,33 +31,6 @@ services:
       - "traefik.http.routers.dmc-jellyfin.tls.certresolver=letsencrypt"
       - "traefik.docker.network=global"
 
-  transmission:
-    image: lscr.io/linuxserver/transmission:latest
-    restart: unless-stopped
-    networks:
-      - global
-      - local
-    environment:
-      - PUID=${ENV_PUID}
-      - PGID=${ENV_PGID}
-      - TZ=${TIMEZONE}
-    volumes:
-      - ${SERVICES_DIR}/transmission:/config
-      - ${DATA_DIR}/downloads:/data/downloads
-    ports:
-      - 51413:51413 # Torrent port TCP
-      - 51413:51413/udp # Torrent port UDP
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.dmc-transmission.rule=Host(`${SUB_DOMAIN_TRANSMISSION}.${DOMAIN}`)"
-      - "traefik.http.routers.dmc-transmission.tls=true"
-      - "traefik.http.services.dmc-transmission.loadbalancer.server.port=9091"
-      - "traefik.http.routers.dmc-transmission.tls.certresolver=letsencrypt"
-      - "traefik.docker.network=global"
-      # Basic auth
-      - "traefik.http.middlewares.dmc-auth.basicauth.usersfile=/.htpasswd"
-      - "traefik.http.routers.dmc-transmission.middlewares=dmc-auth"
-
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     restart: unless-stopped
