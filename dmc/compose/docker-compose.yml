@@ -29,6 +29,7 @@ services:
       - "traefik.http.routers.dmc-jellyfin.tls=true"
       - "traefik.http.services.dmc-jellyfin.loadbalancer.server.port=8096"
       - "traefik.http.routers.dmc-jellyfin.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dmc-jellyfin.middlewares=redirect-to-https"
       - "traefik.docker.network=global"
 
   radarr:
@@ -50,6 +51,7 @@ services:
       - "traefik.http.routers.dmc-radarr.tls=true"
       - "traefik.http.services.dmc-radarr.loadbalancer.server.port=7878"
       - "traefik.http.routers.dmc-radarr.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dmc-radarr.middlewares=redirect-to-https"
       - "traefik.docker.network=global"
       # Basic auth
       - "traefik.http.middlewares.dmc-auth.basicauth.usersfile=/.htpasswd"
@@ -76,6 +78,7 @@ services:
       - "traefik.http.routers.dmc-sonarr.tls=true"
       - "traefik.http.services.dmc-sonarr.loadbalancer.server.port=8989"
       - "traefik.http.routers.dmc-sonarr.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dmc-sonarr.middlewares=redirect-to-https"
       - "traefik.docker.network=global"
       # Basic auth
       - "traefik.http.middlewares.dmc-auth.basicauth.usersfile=/.htpasswd"
@@ -99,6 +102,7 @@ services:
       - "traefik.http.routers.dmc-prowlarr.tls=true"
       - "traefik.http.services.dmc-prowlarr.loadbalancer.server.port=9696"
       - "traefik.http.routers.dmc-prowlarr.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dmc-prowlarr.middlewares=redirect-to-https"
       - "traefik.docker.network=global"
       # Basic auth
       - "traefik.http.middlewares.dmc-auth.basicauth.usersfile=/.htpasswd"
@@ -121,6 +125,7 @@ services:
       - "traefik.http.routers.dmc-jellyseerr.tls=true"
       - "traefik.http.services.dmc-jellyseerr.loadbalancer.server.port=5055"
       - "traefik.http.routers.dmc-jellyseerr.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dmc-jellyseerr.middlewares=redirect-to-https"
       - "traefik.docker.network=global"
 
   rdtclient:
@@ -146,6 +151,7 @@ services:
       - "traefik.http.routers.dmc-rdtclient.tls=true"
       - "traefik.http.services.dmc-rdtclient.loadbalancer.server.port=6500"
       - "traefik.http.routers.dmc-rdtclient.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dmc-rdtclient.middlewares=redirect-to-https"
       - "traefik.docker.network=global"
       # Basic auth
       - "traefik.http.middlewares.dmc-auth.basicauth.usersfile=/.htpasswd"
@@ -168,8 +174,8 @@ services:
       - "traefik.http.routers.dmc-wizarr.tls=true"
       - "traefik.http.services.dmc-wizarr.loadbalancer.server.port=5690"
       - "traefik.http.routers.dmc-wizarr.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dmc-wizarr.middlewares=redirect-to-https"
       - "traefik.docker.network=global"
-
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
@@ -186,3 +192,4 @@ services:
       - "${PORT:-8191}:8191"
     labels:
       - "traefik.enable=false"
+	  
