@@ -169,3 +169,20 @@ services:
       - "traefik.http.services.dmc-wizarr.loadbalancer.server.port=5690"
       - "traefik.http.routers.dmc-wizarr.tls.certresolver=letsencrypt"
       - "traefik.docker.network=global"
+
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    restart: unless-stopped
+    networks:
+      - global
+      - local
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=${TIMEZONE}
+    ports:
+      - "${PORT:-8191}:8191"
+    labels:
+      - "traefik.enable=false"
