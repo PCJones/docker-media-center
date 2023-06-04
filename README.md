@@ -16,6 +16,9 @@ Furthermore, the guide is set up with volume paths in a way to allow hardlinks o
 - Prowlarr
 - Jellyseerr
 - Wizarr
+- rtd-client
+- Sabnzbd
+- Flaresolverr
 
 # 🧰 Getting Started
 This guide assumes you have a basic knowledge of linux and Docker / Docker Compose.
@@ -199,6 +202,15 @@ docker-compose up -d wizarr
 | Server URL | https://jellyfin.domain.com |
 | Server Token / API Key | In Jellyfin admin panel: `Dashboard -> API Keys` |
 | Request instance | https://jellyseerr.domain.com |
+
+## rdt-client
+TODO
+
+## Sabnzbd
+TODO
+
+##Flaresolverr
+TODO (however, no configuring is required)
 
 
 
