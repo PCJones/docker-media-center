@@ -12,7 +12,7 @@ Furthermore, the guide is set up with volume paths in a way to allow hardlinks o
 - Jellyfin
 - Transmission
 - Radarr
-- Sonarr
+- Sonarr (v4 Beta!)
 - Prowlarr
 - Jellyseerr
 - Wizarr
@@ -208,6 +208,7 @@ TODO
 
 ## Sabnzbd
 TODO
+.sh file - also set correct dl paths
 
 ##Flaresolverr
 TODO (however, no configuring is required)
