@@ -58,7 +58,7 @@ services:
       - "traefik.http.routers.dmc-radarr.middlewares=dmc-auth"
 
   sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
+    image: lscr.io/linuxserver/sonarr:develop
     restart: unless-stopped
     #security_opt: # Required for Docker versions below 20.10.10, update Docker for long term solution. Source: https://docs.linuxserver.io/faq#jammy
     #  - seccomp=unconfined
@@ -189,8 +189,8 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${SERVICES_DIR}/sabnzbd:/config
-      - ${DATA_DIR}/downloads/sabnzbd/complete:/downloads
-      - ${DATA_DIR}/downloads/sabnzbd/incomplete:/incomplete-downloads
+      - ${DATA_DIR}/downloads:/data/downloads
+      - ${SERVICES_DIR}/sabnzbd/Downloads/incomplete:/data/incomplete-downloads
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.dmc-sabnzbd.rule=Host(`${SUB_DOMAIN_SABNZBD}.${DOMAIN}`)"
@@ -207,7 +207,6 @@ services:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     restart: unless-stopped
     networks:
-      - global
       - local
     environment:
       - LOG_LEVEL=${LOG_LEVEL:-info}
