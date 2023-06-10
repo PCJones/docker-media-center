@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr:latest
+    networks:
+      - local
+    environment:
+      - TZ=${TIMEZONE}
+      - RECYCLARR_CREATE_CONFIG=true
+    user: ${ENV_PUID}:${ENV_PGID}
+    volumes:
+      - ${SERVICES_DIR}/recyclarr:/config
+    labels:
+      - "traefik.enable=false"
