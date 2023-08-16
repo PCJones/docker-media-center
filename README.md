@@ -16,7 +16,7 @@ Furthermore, the guide is set up with volume paths in a way to allow hardlinks o
 - Prowlarr
 - Jellyseerr
 - Wizarr
-- rtd-client
+- rdt-client
 - Sabnzbd
 - Flaresolverr
 
